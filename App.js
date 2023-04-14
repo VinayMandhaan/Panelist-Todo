@@ -1,11 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Font from "expo-font";
+import Routes from './src/routes';
+import store from './src/store';
+import Toast from 'react-native-toast-message';
+import { loadUser } from './src/actions/auth';
+import { Provider } from 'react-redux';
 
 
 export default function App() {
-
   useEffect(() => {
     async function loadFont() {
       await Font.loadAsync({
@@ -17,13 +20,18 @@ export default function App() {
       });
     }
     loadFont();
-  })
+  },[])
+
+  useEffect(() => {
+    store.dispatch(loadUser())
+  }, [])
+
 
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <Toast />
+      <Routes />
+    </Provider>
   );
 }
 

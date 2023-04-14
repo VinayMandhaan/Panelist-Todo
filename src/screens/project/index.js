@@ -6,7 +6,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { useDispatch, useSelector } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CreateProject from './create';
-import { getProject } from '../../actions/project';
+import { deleteProject, getProject, updateProject } from '../../actions/project';
 
 
 
@@ -35,12 +35,12 @@ const Project = () => {
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
                     {
                         !item?.status && (
-                            <TouchableOpacity onPress={() => dispatch(updateTask(item?._id))}>
+                            <TouchableOpacity onPress={() => dispatch(updateProject(item?._id))}>
                                 <MaterialCommunityIcons name='check' color={Colors.greenColor} size={24} />
                             </TouchableOpacity>
                         )
                     }
-                    <TouchableOpacity onPress={() => dispatch(deleteTask(item?._id))}>
+                    <TouchableOpacity onPress={() => dispatch(deleteProject(item?._id))}>
                         <MaterialCommunityIcons name='delete' color={Colors.redColor} size={24} />
                     </TouchableOpacity>
                 </View>
@@ -53,7 +53,13 @@ const Project = () => {
     }
 
 
-
+    if (loading) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator color={'black'} size={24} />
+            </View>
+        )
+    }
     return (
         <SafeAreaView style={styles.container}>
             <Header title={'Project'} showRightIcon={true} onPressRightIcon={addProject} />

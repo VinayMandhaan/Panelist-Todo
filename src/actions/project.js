@@ -1,5 +1,5 @@
 import api from "../utils/api";
-import {  UPDATE_TASK_REQUEST, UPDATE_TASK_SUCCESS, UPDATE_TASK_FAILURE, DELETE_TASK_REQUEST, DELETE_TASK_SUCCESS, DELETE_TASK_FAILURE, CREATE_PROJECT_REQUEST, CREATE_PROJECT_FAILURE, GET_PROJECT_REQUEST, GET_PROJECT_SUCCESS, GET_PROJECT_FAILURE, CREATE_PROJECT_SUCCESS } from "./types";
+import {  UPDATE_TASK_REQUEST, UPDATE_TASK_SUCCESS, UPDATE_TASK_FAILURE, DELETE_TASK_REQUEST, DELETE_TASK_SUCCESS, DELETE_TASK_FAILURE, CREATE_PROJECT_REQUEST, CREATE_PROJECT_FAILURE, GET_PROJECT_REQUEST, GET_PROJECT_SUCCESS, GET_PROJECT_FAILURE, CREATE_PROJECT_SUCCESS, UPDATE_PROJECT_REQUEST, UPDATE_PROJECT_FAILURE, DELETE_PROJECT_REQUEST, DELETE_PROJECT_FAILURE, DELETE_PROJECT_SUCCESS } from "./types";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { showToast } from "../utils/customToast";
 
@@ -68,15 +68,15 @@ export const getProject = () => async dispatch => {
     }
 }
 
-export const updateTask = (taskId) => async dispatch => {
+export const updateProject = (projectId) => async dispatch => {
     var userData = await AsyncStorage.getItem('token')
     try {
         dispatch({
-            type: UPDATE_TASK_REQUEST
+            type: UPDATE_PROJECT_REQUEST
         })
         await api({
             method: 'POST',
-            url: `/task/update/${taskId}`,
+            url: `/project/update/${projectId}`,
             data: {
                 status:true
             },
@@ -84,8 +84,7 @@ export const updateTask = (taskId) => async dispatch => {
                 "x-auth-token": userData
             }
         }).then((res) => {
-            console.log(res.data,'YPDATE')
-            dispatch(getTasks())
+            dispatch(getProject())
             dispatch({
                 type: UPDATE_TASK_SUCCESS,
                 payload: res.data
@@ -100,28 +99,28 @@ export const updateTask = (taskId) => async dispatch => {
             errors.forEach(error => showToast('error', 'Post', error.msg))
         }
         dispatch({
-            type: UPDATE_TASK_FAILURE
+            type: UPDATE_PROJECT_FAILURE
         })
     }
 }
 
 
-export const deleteTask = (taskId) => async dispatch => {
+export const deleteProject = (projectId) => async dispatch => {
     var userData = await AsyncStorage.getItem('token')
     try {
         dispatch({
-            type: DELETE_TASK_REQUEST
+            type: DELETE_PROJECT_REQUEST
         })
         await api({
             method: 'DELETE',
-            url: `/task/${taskId}`,
+            url: `/project/${projectId}`,
             headers: {
                 "x-auth-token": userData
             }
         }).then((res) => {
-            dispatch(getTasks())
+            dispatch(getProject())
             dispatch({
-                type: DELETE_TASK_SUCCESS,
+                type: DELETE_PROJECT_SUCCESS,
                 payload: res.data
             })
 
@@ -134,7 +133,7 @@ export const deleteTask = (taskId) => async dispatch => {
             errors.forEach(error => showToast('error', 'Post', error.msg))
         }
         dispatch({
-            type: DELETE_TASK_FAILURE
+            type: DELETE_PROJECT_SUCCESS
         })
     }
 }

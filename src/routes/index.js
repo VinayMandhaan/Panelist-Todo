@@ -5,6 +5,8 @@ import SigninScreen from "../screens/auth/login";
 import Task from '../screens/task';
 import Project from '../screens/project';
 import Users from '../screens/users';
+import SignupScreen from '../screens/auth/register';
+import { useSelector } from 'react-redux';
 
 
 
@@ -23,13 +25,23 @@ function MyTabs() {
 
 
 const Routes = () => {
+    let userToken = useSelector(state => state.auth.isAuthenticated);
     const navigationRef = useNavigationContainerRef()
 
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="SigninScreen" component={SigninScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="HomeScreen" component={MyTabs} options={{ headerShown: false }} />
+                {
+                    !userToken ? (
+                        <>
+                            <Stack.Screen name="SigninScreen" component={SigninScreen} options={{ headerShown: false }} />
+                            <Stack.Screen name="SignupScreen" component={SignupScreen} options={{ headerShown: false }} />
+                        </>
+                    ) : (
+                        <Stack.Screen name="HomeScreen" component={MyTabs} options={{ headerShown: false }} />
+                    )
+                }
+
             </Stack.Navigator>
         </NavigationContainer>
     )

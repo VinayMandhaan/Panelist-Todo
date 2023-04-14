@@ -69,7 +69,7 @@ export const login = (email, password) => async dispatch => {
     }
 }
 
-export const register = (email, password, firstName, lastName, username) => async dispatch => {
+export const register = (email, password, fullName) => async dispatch => {
     try {
         dispatch({
             type: REGISTER_REQUEST,
@@ -80,9 +80,7 @@ export const register = (email, password, firstName, lastName, username) => asyn
             data: {
                 email: email,
                 password: password,
-                firstName: firstName,
-                lastName: lastName,
-                username: username
+                fullName: fullName
             }
         }).then((res) => {
             dispatch({
@@ -95,6 +93,7 @@ export const register = (email, password, firstName, lastName, username) => asyn
         console.log(err)
         const errors = err.response.data.errors
         if (errors) {
+            console.log(errors,'ERROR')
             errors.forEach(error => showToast('error', 'Register', error.msg))
         }
         dispatch({

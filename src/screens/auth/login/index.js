@@ -4,21 +4,21 @@ import { Colors, Fonts, Sizes } from '../../../constants/styles'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { showToast } from '../../../utils/customToast';
 import { ActivityIndicator } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const { width } = Dimensions.get('window');
 
 const SigninScreen = ({ navigation }) => {
-    // const dispatch = useDispatch()
-    // const authLoading = useSelector(state => state.auth.loading)
-    const authLoading = false
+    const dispatch = useDispatch()
+    const authLoading = useSelector(state => state.auth.loading)
 
     const onSubmitLogin = () => {
         navigation.navigate('HomeScreen')
         if (password.length < 7) {
             showToast('error', 'Login', 'Password Should Be More Than 6 Characters')
         } else {
-            // dispatch(login(email, password))
+            dispatch(login(email, password))
         }
     }
 
@@ -50,7 +50,7 @@ const SigninScreen = ({ navigation }) => {
                     Don’t have an account? { }
                 </Text>
                 <Text
-                    onPress={() => { navigation.push('Signup') }}
+                    onPress={() => { navigation.push('SignupScreen') }}
                     style={{ ...Fonts.primaryColor16Bold }}
                 >
                     Sign Up

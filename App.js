@@ -6,6 +6,7 @@ import store from './src/store';
 import Toast from 'react-native-toast-message';
 import { loadUser } from './src/actions/auth';
 import { Provider } from 'react-redux';
+import Splash from './src/screens/splash';
 
 
 export default function App() {
@@ -25,11 +26,17 @@ export default function App() {
     }, 4000);
   }
 
+  if (displaySplash) {
+    return (
+      <Splash />
+    )
+  }
+
 
   return (
     <Provider store={store}>
-      <Toast />
       <Routes />
+      <Toast />
     </Provider>
   );
 }

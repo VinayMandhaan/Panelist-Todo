@@ -2,14 +2,19 @@ import { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Colors } from '../../constants/styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../actions/auth';
 
 
 
 const Header = ({ title, showLeftIcon, showRightIcon, onPressRightIcon, onPressLeftIcon }) => {
+    const dispatch = useDispatch()
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    dispatch(logout())
+                }}>
                     <MaterialCommunityIcons name='arrow-left-circle' color={Colors.blackColor} size={24} />
                 </TouchableOpacity>
                 <Text style={styles.textStyle}>{title}</Text>

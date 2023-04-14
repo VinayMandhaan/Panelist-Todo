@@ -28,35 +28,63 @@ const Task = () => {
 
     const sortByDue = () => {
         dispatch({
-            type:SORT_TASK,
-            payload:tasks
+            type: SORT_TASK,
+            payload: tasks
         })
     }
 
     const displayCompleted = () => {
         dispatch({
-            type:DISPLAY_COMPLETED,
-            payload:tasks
+            type: DISPLAY_COMPLETED,
+            payload: tasks
         })
     }
 
     const displayAll = () => {
         dispatch({
-            type:DISPLAY_ALL,
-            payload:tasks
+            type: DISPLAY_ALL,
+            payload: tasks
         })
     }
 
     const displayNotCompleted = () => {
         dispatch({
-            type:DISPLAY_NOT_COMPLETED,
-            payload:tasks
+            type: DISPLAY_NOT_COMPLETED,
+            payload: tasks
         })
     }
 
     useEffect(() => {
         getTask()
     }, [])
+
+
+    const displayFilters = () => {
+        return (
+            <View style={styles.filterContainer}>
+                <TouchableOpacity style={styles.filterStyle} onPress={() => {
+                    sortByDue()
+                }}>
+                    <Text style={styles.filterLabel}>Sort By Due Date</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.filterStyle} onPress={() => {
+                    displayCompleted()
+                }}>
+                    <Text style={styles.filterLabel}>Completed</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.filterStyle} onPress={() => {
+                    displayNotCompleted()
+                }}>
+                    <Text style={styles.filterLabel}>Not Completed</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.filterStyle} onPress={() => {
+                    displayAll()
+                }}>
+                    <Text style={styles.filterLabel}>ALL</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }
 
 
     const renderItem = ({ item }) => {
@@ -83,10 +111,10 @@ const Task = () => {
         )
     }
 
-    if(loading) {
+    if (loading) {
         return (
-            <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-                <ActivityIndicator color={'black'} size={24}/>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator color={'black'} size={24} />
             </View>
         )
     }
@@ -94,29 +122,7 @@ const Task = () => {
     return (
         <SafeAreaView style={styles.container}>
             <Header title={'Task'} showRightIcon={true} onPressRightIcon={addTask} />
-            <View style={styles.filterContainer}>
-                <TouchableOpacity style={styles.filterStyle} onPress={() => {
-                    sortByDue()
-                }}>
-                    <Text style={styles.filterLabel}>Sort By Due Date</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.filterStyle} onPress={() => {
-                    displayCompleted()
-                }}>
-                    <Text style={styles.filterLabel}>Completed</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.filterStyle} onPress={() => {
-                    displayNotCompleted()
-                }}>
-                    <Text style={styles.filterLabel}>Not Completed</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.filterStyle} onPress={() => {
-                    displayAll()
-                }}>
-                    <Text style={styles.filterLabel}>ALL</Text>
-                </TouchableOpacity>
-            </View>
-
+            {displayFilters()}
             <FlatList
                 data={tasks}
                 keyExtractor={(item) => `${item._id}`}
@@ -145,22 +151,22 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.whiteColor
     },
     filterStyle: {
-        backgroundColor:Colors.blackColor,
-        padding:10,
-        alignItems:'center',
-        borderRadius:10,
-        margin:4
+        backgroundColor: Colors.blackColor,
+        padding: 10,
+        alignItems: 'center',
+        borderRadius: 10,
+        margin: 4
     },
     filterContainer: {
-        display:'flex',
-        flexDirection:'row',
-        alignItems:'center',
-        margin:10,
-        flexWrap:'wrap'
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        margin: 10,
+        flexWrap: 'wrap'
     },
     filterLabel: {
         ...Fonts.blackColor12SemiBold,
-        color:'white'
+        color: 'white'
     }
 })
 export default Task

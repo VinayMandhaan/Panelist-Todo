@@ -14,6 +14,7 @@ const SigninScreen = ({ navigation }) => {
     const authLoading = false
 
     const onSubmitLogin = () => {
+        navigation.navigate('HomeScreen')
         if (password.length < 7) {
             showToast('error', 'Login', 'Password Should Be More Than 6 Characters')
         } else {

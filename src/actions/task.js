@@ -52,7 +52,7 @@ export const getTasks = () => async dispatch => {
         }).then((res) => {
             dispatch({
                 type: GET_TASK_SUCCESS,
-                payload: res.data
+                payload: res.data?.task
             })
         })
     }catch(err) {

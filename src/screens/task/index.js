@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { Colors, Sizes, Fonts } from '../../constants/styles';
 import Header from '../../components/header';
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -7,6 +7,7 @@ import CreateTask from './create';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteTask, getTasks, updateTask } from '../../actions/task';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { SORT_TASK } from '../../actions/types';
 
 
 const Task = () => {
@@ -15,6 +16,7 @@ const Task = () => {
     const loading = useSelector(state => state.task.loading)
     const [taskData, setTaskData] = useState(tasks)
     const bottomSheet = useRef()
+
 
     const addTask = () => {
         bottomSheet.current.open()
@@ -25,9 +27,10 @@ const Task = () => {
     }
 
     const sortByDue = () => {
-        const dateArray = [...taskData]
-        dateArray?.sort((a, b) => new Date(a?.dueDate) - new Date(b?.dueDate));
-        setTaskData(dateArray)
+        dispatch({
+            type:SORT_TASK,
+            payload:tasks
+        })
     }
 
     const sortByCompleted = () => {
@@ -40,6 +43,7 @@ const Task = () => {
 
 
     const renderItem = ({ item }) => {
+        console.log(item?.status)
         return (
             <View style={{ backgroundColor: '#F5F5F5', margin: 20, padding: 20, borderRadius: 20 }} key={item?._id}>
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
@@ -58,11 +62,18 @@ const Task = () => {
                 <Text style={{ ...Fonts.blackColor14SemiBold, marginBottom: 6 }}>{item?.description}</Text>
                 <Text style={{ ...Fonts.blackColor14SemiBold, marginBottom: 6 }}>Due: {item?.dueDate}</Text>
                 <Text style={{ ...Fonts.grayColor14SemiBold, marginBottom: 6 }}>Reminder Set: {item?.reminder ? 'Yes' : 'No'}</Text>
-                <Text style={{ ...Fonts.grayColor14SemiBold }}>Status: {item?.status ? 'Not Completed' : 'Completed'}</Text>
+                <Text style={{ ...Fonts.grayColor14SemiBold }}>Status: {item?.status ? 'Completed' : 'Not Completed'}</Text>
             </View>
         )
     }
 
+    if(loading) {
+        return (
+            <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+                <ActivityIndicator color={'black'} size={24}/>
+            </View>
+        )
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -76,7 +87,7 @@ const Task = () => {
             </View>
 
             <FlatList
-                data={tasks?.task}
+                data={tasks}
                 keyExtractor={(item) => `${item._id}`}
                 renderItem={renderItem}
             />

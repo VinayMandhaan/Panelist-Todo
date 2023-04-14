@@ -32,7 +32,6 @@ const Header = ({ title, showLeftIcon, showRightIcon, onPressRightIcon, onPressL
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: Colors.whiteColor
     },
     headerContainer: {

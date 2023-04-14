@@ -7,7 +7,7 @@ import CreateTask from './create';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteTask, getTasks, updateTask } from '../../actions/task';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { SORT_TASK } from '../../actions/types';
+import { DISPLAY_ALL, DISPLAY_COMPLETED, DISPLAY_NOT_COMPLETED, SORT_TASK } from '../../actions/types';
 
 
 const Task = () => {
@@ -33,8 +33,25 @@ const Task = () => {
         })
     }
 
-    const sortByCompleted = () => {
+    const displayCompleted = () => {
+        dispatch({
+            type:DISPLAY_COMPLETED,
+            payload:tasks
+        })
+    }
 
+    const displayAll = () => {
+        dispatch({
+            type:DISPLAY_ALL,
+            payload:tasks
+        })
+    }
+
+    const displayNotCompleted = () => {
+        dispatch({
+            type:DISPLAY_NOT_COMPLETED,
+            payload:tasks
+        })
     }
 
     useEffect(() => {
@@ -43,7 +60,6 @@ const Task = () => {
 
 
     const renderItem = ({ item }) => {
-        console.log(item?.status)
         return (
             <View style={{ backgroundColor: '#F5F5F5', margin: 20, padding: 20, borderRadius: 20 }} key={item?._id}>
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
@@ -83,6 +99,21 @@ const Task = () => {
                     sortByDue()
                 }}>
                     <Text>Sort By Due Date</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    displayCompleted()
+                }}>
+                    <Text>Sort By Completed</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    displayNotCompleted()
+                }}>
+                    <Text>Sort By NOT Completed</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    displayAll()
+                }}>
+                    <Text>Sort By ALL</Text>
                 </TouchableOpacity>
             </View>
 

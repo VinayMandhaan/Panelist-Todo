@@ -94,26 +94,26 @@ const Task = () => {
     return (
         <SafeAreaView style={styles.container}>
             <Header title={'Task'} showRightIcon={true} onPressRightIcon={addTask} />
-            <View>
-                <TouchableOpacity onPress={() => {
+            <View style={styles.filterContainer}>
+                <TouchableOpacity style={styles.filterStyle} onPress={() => {
                     sortByDue()
                 }}>
-                    <Text>Sort By Due Date</Text>
+                    <Text style={styles.filterLabel}>Sort By Due Date</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
+                <TouchableOpacity style={styles.filterStyle} onPress={() => {
                     displayCompleted()
                 }}>
-                    <Text>Sort By Completed</Text>
+                    <Text style={styles.filterLabel}>Completed</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
+                <TouchableOpacity style={styles.filterStyle} onPress={() => {
                     displayNotCompleted()
                 }}>
-                    <Text>Sort By NOT Completed</Text>
+                    <Text style={styles.filterLabel}>Not Completed</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
+                <TouchableOpacity style={styles.filterStyle} onPress={() => {
                     displayAll()
                 }}>
-                    <Text>Sort By ALL</Text>
+                    <Text style={styles.filterLabel}>ALL</Text>
                 </TouchableOpacity>
             </View>
 
@@ -143,6 +143,24 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.whiteColor
+    },
+    filterStyle: {
+        backgroundColor:Colors.blackColor,
+        padding:10,
+        alignItems:'center',
+        borderRadius:10,
+        margin:4
+    },
+    filterContainer: {
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+        margin:10,
+        flexWrap:'wrap'
+    },
+    filterLabel: {
+        ...Fonts.blackColor12SemiBold,
+        color:'white'
     }
 })
 export default Task

@@ -29,7 +29,6 @@ const Project = () => {
     }, [])
 
     const renderItem = ({ item }) => {
-        console.log(item)
         return (
             <View style={{ backgroundColor: '#F5F5F5', margin: 20, padding: 20, borderRadius: 20 }} key={item?._id}>
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>

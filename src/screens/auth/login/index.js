@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { showToast } from '../../../utils/customToast';
 import { ActivityIndicator } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../../actions/auth';
 
 
 const { width } = Dimensions.get('window');
@@ -14,7 +15,6 @@ const SigninScreen = ({ navigation }) => {
     const authLoading = useSelector(state => state.auth.loading)
 
     const onSubmitLogin = () => {
-        navigation.navigate('HomeScreen')
         if (password.length < 7) {
             showToast('error', 'Login', 'Password Should Be More Than 6 Characters')
         } else {

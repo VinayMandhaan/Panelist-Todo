@@ -2,6 +2,8 @@ import api from "../utils/api";
 import { CREATE_TASK_REQUEST, CREATE_TASK_SUCCESS, CREATE_TASK_FAILURE, GET_TASK_REQUEST, GET_TASK_SUCCESS, GET_TASK_FAILURE, UPDATE_TASK_REQUEST, UPDATE_TASK_SUCCESS, UPDATE_TASK_FAILURE, DELETE_TASK_REQUEST, DELETE_TASK_SUCCESS, DELETE_TASK_FAILURE } from "./types";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { showToast } from "../utils/customToast";
+import * as Notifications from 'expo-notifications';
+
 
 export const createTask = (data) => async dispatch => {
     var userData = await AsyncStorage.getItem('token')
@@ -21,8 +23,8 @@ export const createTask = (data) => async dispatch => {
             dispatch({
                 type: CREATE_TASK_SUCCESS,
                 payload: res.data
-            })
-
+            })        
+            scheduleNotificationAsync(data?.dueDate)   
         })
     } catch (err) {
         console.log(err)
@@ -138,3 +140,15 @@ export const deleteTask = (taskId) => async dispatch => {
         })
     }
 }
+
+async function scheduleNotificationAsync(value) {
+    const dueDate = new Date(value);
+    const minutesBefore = 60;
+    const trigger = new Date(dueDate.getTime() - minutesBefore * 60 * 1000);
+    const content = {
+      title: 'Reminder',
+      body: 'Your deadline is approaching. Complete your task before the due date.',
+      sound: true,
+    };
+    await Notifications.scheduleNotificationAsync({ content, trigger });
+}   

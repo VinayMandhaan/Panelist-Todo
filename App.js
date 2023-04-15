@@ -7,10 +7,20 @@ import Toast from 'react-native-toast-message';
 import { loadUser } from './src/actions/auth';
 import { Provider } from 'react-redux';
 import Splash from './src/screens/splash';
+import * as Notifications from 'expo-notifications';
+
 
 
 export default function App() {
   const [displaySplash, setDisplaySplash] = useState(true)
+
+  async function registerForPushNotificationsAsync() {
+  const { status } = await Notifications.requestPermissionsAsync();
+  if (status !== 'granted') {
+    alert('You need to enable notifications in your device settings to receive reminders.');
+    return;
+  }
+}
 
   useEffect(() => {
     store.dispatch(loadUser())
@@ -18,6 +28,7 @@ export default function App() {
 
   useEffect(() => {
     renderSplash()
+    registerForPushNotificationsAsync()
   }, [])
 
   const renderSplash = () => {

@@ -103,8 +103,6 @@ export const register = (email, password, fullName) => async dispatch => {
 }
 
 
-
-
 export const logout = () => async dispatch => {
     try {
         dispatch({
@@ -112,35 +110,5 @@ export const logout = () => async dispatch => {
         })
     } catch (err) {
         console.log(err)
-    }
-}
-
-export const getUsers = () => async dispatch => {
-    try {
-        dispatch({
-            type: GET_USERS_REQUEST
-        })
-        await api({
-            method: 'GET',
-            url: '/auth/users',
-        }).then((res) => {
-            dispatch({
-                type: GET_USERS_SUCCESS,
-                payload: res.data
-            })
-        })
-    } catch (err) {
-        console.log(err)
-        const errors = err.response.data.errors
-        if (errors) {
-            errors.forEach(error => Toast.show({
-                type: 'error',
-                text1: 'Login',
-                text2: `${error.msg}`
-            }))
-        }
-        dispatch({
-            type: GET_USERS_FAILURE
-        })
     }
 }

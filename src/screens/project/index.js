@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CreateProject from './create';
 import { deleteProject, getProject, updateProject } from '../../actions/project';
+import Loader from '../../components/loader';
 
 
 
@@ -54,9 +55,7 @@ const Project = () => {
 
     if (loading) {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator color={'black'} size={24} />
-            </View>
+            <Loader/>
         )
     }
     return (

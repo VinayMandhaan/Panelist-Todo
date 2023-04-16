@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import * as Font from "expo-font";
+import Loader from '../../components/loader';
 
 
 const Splash = () => {
@@ -18,9 +19,7 @@ const Splash = () => {
   }, [])
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <ActivityIndicator color={'black'} size={24} />
-    </View>
+    <Loader/>
   )
 }
 

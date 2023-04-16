@@ -4,6 +4,7 @@ import { Colors, Fonts } from '../../constants/styles';
 import Header from '../../components/header';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMyShared, getUserShared } from '../../actions/shared';
+import Loader from '../../components/loader';
 
 
 const Shared = () => {
@@ -49,9 +50,7 @@ const Shared = () => {
 
     if (loading) {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator color={'black'} size={24} />
-            </View>
+            <Loader/>
         )
     }
 

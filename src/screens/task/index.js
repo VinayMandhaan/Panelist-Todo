@@ -11,6 +11,9 @@ import { DISPLAY_ALL, DISPLAY_COMPLETED, DISPLAY_NOT_COMPLETED, SORT_TASK } from
 import { Modal } from 'react-native-paper';
 import Users from '../users';
 import { createShared } from '../../actions/shared';
+import Loader from '../../components/loader';
+import { format } from "date-fns";
+
 
 
 const Task = () => {
@@ -103,6 +106,7 @@ const Task = () => {
 
 
     const renderItem = ({ item }) => {
+        var formattedDate = format(new Date(item?.dueDate), 'MMM d, yyyy');
         return (
             <View style={styles.cardStyle} key={item?._id}>
                 <View style={styles.iconContainer}>
@@ -124,9 +128,9 @@ const Task = () => {
                         <MaterialCommunityIcons name='share' color={Colors.grayColor} size={24}/>
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.labelStyle}>{item?.name}</Text>
-                <Text style={styles.labelStyle}>{item?.description}</Text>
-                <Text style={styles.labelStyle}>Due: {item?.dueDate}</Text>
+                <Text style={styles.labelStyle}>Name: {item?.name}</Text>
+                <Text style={styles.labelStyle}>Notes: {item?.description}</Text>
+                <Text style={styles.labelStyle}>Due: {formattedDate}</Text>
                 <Text style={styles.grayLabelStyle}>Reminder Set: {item?.reminder ? 'Yes' : 'No'}</Text>
                 <Text style={styles.grayLabelStyle}>Status: {item?.status ? 'Completed' : 'Not Completed'}</Text>
             </View>
@@ -135,9 +139,7 @@ const Task = () => {
 
     if (loading) {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator color={'black'} size={24} />
-            </View>
+            <Loader/>
         )
     }
 

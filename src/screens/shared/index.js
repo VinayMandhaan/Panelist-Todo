@@ -5,6 +5,7 @@ import Header from '../../components/header';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMyShared, getUserShared } from '../../actions/shared';
 import Loader from '../../components/loader';
+import { formatDate } from '../../utils/dateFunctions';
 
 
 const Shared = () => {
@@ -41,7 +42,7 @@ const Shared = () => {
                 </View>
                 <View>
                     <Text style={{ ...Fonts.blackColor14SemiBold }}>Task Name: {item?.taskId?.name}</Text>
-                    <Text style={{ ...Fonts.blackColor14SemiBold }}>Task Due Date: {item?.taskId?.dueDate}</Text>
+                    <Text style={{ ...Fonts.blackColor14SemiBold }}>Task Due Date: {formatDate(item?.taskId?.dueDate)}</Text>
                     <Text style={{ ...Fonts.blackColor14SemiBold }}>Status: {item?.taskId?.status ? 'Completed' : 'Not Completed'}</Text>
                 </View>
             </TouchableOpacity>

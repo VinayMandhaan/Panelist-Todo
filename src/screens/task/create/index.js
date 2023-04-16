@@ -6,14 +6,15 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import { createTask } from '../../../actions/task';
 import Button from '../../../components/button';
+import { showToast } from '../../../utils/customToast';
 
 
 
 
 const CreateTask = () => {
     const dispatch = useDispatch()
-    const [name, setName] = useState()
-    const [description, setDescription] = useState()
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
     const [dueDate, setDueDate] = useState(new Date())
     const [reminder, setReminder] = useState(false)
 
@@ -22,13 +23,17 @@ const CreateTask = () => {
     }
 
     const onSubmit = () => {
-        const data = {
-            name:name,
-            description:description,
-            dueDate:dueDate,
-            reminder:reminder
+        if(!name?.length > 0 || !description?.length > 0) {
+            showToast('error','Todo','Name and Description Should Not Be Empty')
+        } else {
+            const data = {
+                name:name,
+                description:description,
+                dueDate:dueDate,
+                reminder:reminder
+            }
+            dispatch(createTask(data))
         }
-        dispatch(createTask(data))
     }
     
     return (

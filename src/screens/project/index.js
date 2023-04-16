@@ -46,7 +46,11 @@ const Project = () => {
                 </View>
                 <Text style={{ ...Fonts.blackColor14SemiBold, marginBottom: 6 }}>{item?.name}</Text>
                 <Text style={{ ...Fonts.blackColor14SemiBold, marginBottom: 6 }}>{item?.description}</Text>
-                <Text style={{ ...Fonts.blackColor14SemiBold, marginBottom: 6 }}>Task: {item?.taskId?.name}</Text>
+                {
+                    item?.taskId?.name && (
+                        <Text style={{ ...Fonts.blackColor14SemiBold, marginBottom: 6 }}>Task: {item?.taskId?.name}</Text>
+                    )
+                }
                 <Text style={{ ...Fonts.grayColor14SemiBold }}>Status: {item?.status ? 'Completed' : 'Not Completed'}</Text>
             </View>
         )

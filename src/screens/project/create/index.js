@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../../components/button';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { createProject } from '../../../actions/project';
+import { showToast } from '../../../utils/customToast';
 
 
 
@@ -14,8 +15,8 @@ import { createProject } from '../../../actions/project';
 
 const CreateProject = () => {
     const dispatch = useDispatch()
-    const [name, setName] = useState()
-    const [description, setDescription] = useState()
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
     const [dueDate, setDueDate] = useState(new Date())
     const [reminder, setReminder] = useState(false)
     const [open, setOpen] = useState(false);
@@ -41,12 +42,16 @@ const CreateProject = () => {
     }, [])
 
     const onSubmit = () => {
-        const data = {
-            name: name,
-            description: description,
-            taskId:value,
+        if(!name?.length > 0 || !description?.length > 0){
+            showToast('error','Todo','Name and Description Should Not Be Empty')
+        } else {
+            const data = {
+                name: name,
+                description: description,
+                taskId:value,
+            }
+            dispatch(createProject(data))
         }
-        dispatch(createProject(data))
     }
 
     return (

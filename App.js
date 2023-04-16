@@ -34,7 +34,7 @@ export default function App() {
   const renderSplash = () => {
     setTimeout(() => {
       setDisplaySplash(false)
-    }, 4000);
+    }, 2000);
   }
 
   if (displaySplash) {

@@ -66,7 +66,7 @@ const Task = () => {
             taskId:selectedTask,
             sender:user?._id
         }
-        dispatch(createShared(data))
+        dispatch(createShared(data, userBottomSheet))
     }
 
     useEffect(() => {

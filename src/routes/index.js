@@ -7,6 +7,7 @@ import Project from '../screens/project';
 import Users from '../screens/users';
 import SignupScreen from '../screens/auth/register';
 import { useSelector } from 'react-redux';
+import Shared from '../screens/shared';
 
 
 
@@ -19,6 +20,7 @@ function MyTabs() {
             <Tab.Screen name="Task" component={Task} options={{ headerShown: false }} />
             <Tab.Screen name="Project" component={Project} options={{ headerShown: false }} />
             <Tab.Screen name="User" component={Users} options={{ headerShown: false }} />
+            <Tab.Screen name='Shared' component={Shared} options={{headerShown:false}} />
         </Tab.Navigator>
     );
 }

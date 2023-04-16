@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../actions/users';
 
 
-const Users = () => {
+const Users = ({onClickUser}) => {
     const dispatch = useDispatch()
     const users = useSelector(state => state.users.users)
 
@@ -26,7 +26,9 @@ const Users = () => {
     const renderItem = ({ item }) => {
         const initials = getInitials(item?.fullName);
         return (
-            <TouchableOpacity style={{ backgroundColor: '#F5F5F5', margin: 20, padding: 20, borderRadius: 20 }} key={item?._id}>
+            <TouchableOpacity onPress={() => {
+                onClickUser(item?._id)
+            }} style={{ backgroundColor: '#F5F5F5', margin: 20, padding: 20, borderRadius: 20 }} key={item?._id}>
                 <View style={styles.userContainer}>
                 <View style={styles.avatarContainer}>
                     <Text style={styles.text}>{initials}</Text>

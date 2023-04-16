@@ -8,14 +8,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteTask, getTasks, updateTask } from '../../actions/task';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DISPLAY_ALL, DISPLAY_COMPLETED, DISPLAY_NOT_COMPLETED, SORT_TASK } from '../../actions/types';
+import { Modal } from 'react-native-paper';
+import Users from '../users';
+import { createShared } from '../../actions/shared';
 
 
 const Task = () => {
     const dispatch = useDispatch()
+    const user = useSelector(state => state.auth.user)
     const tasks = useSelector(state => state.task.tasks)
     const loading = useSelector(state => state.task.loading)
-    const [taskData, setTaskData] = useState(tasks)
+    const [selectedTask, setSelectedTask] = useState()
+
     const bottomSheet = useRef()
+    const userBottomSheet = useRef()
 
 
     const addTask = () => {
@@ -54,6 +60,15 @@ const Task = () => {
         })
     }
 
+    const onShareUser = (selectedUser ) => {
+        const data = {
+            userId:selectedUser,
+            taskId:selectedTask,
+            sender:user?._id
+        }
+        dispatch(createShared(data))
+    }
+
     useEffect(() => {
         getTask()
     }, [])
@@ -89,8 +104,8 @@ const Task = () => {
 
     const renderItem = ({ item }) => {
         return (
-            <View style={{ backgroundColor: '#F5F5F5', margin: 20, padding: 20, borderRadius: 20 }} key={item?._id}>
-                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+            <View style={styles.cardStyle} key={item?._id}>
+                <View style={styles.iconContainer}>
                     {
                         !item?.status && (
                             <TouchableOpacity onPress={() => dispatch(updateTask(item?._id))}>
@@ -101,12 +116,19 @@ const Task = () => {
                     <TouchableOpacity onPress={() => dispatch(deleteTask(item?._id))}>
                         <MaterialCommunityIcons name='delete' color={Colors.redColor} size={24} />
                     </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => {
+                        setSelectedTask(item?._id)
+                        userBottomSheet.current.open()
+                    }}>
+                        <MaterialCommunityIcons name='share' color={Colors.grayColor} size={24}/>
+                    </TouchableOpacity>
                 </View>
-                <Text style={{ ...Fonts.blackColor14SemiBold, marginBottom: 6 }}>{item?.name}</Text>
-                <Text style={{ ...Fonts.blackColor14SemiBold, marginBottom: 6 }}>{item?.description}</Text>
-                <Text style={{ ...Fonts.blackColor14SemiBold, marginBottom: 6 }}>Due: {item?.dueDate}</Text>
-                <Text style={{ ...Fonts.grayColor14SemiBold, marginBottom: 6 }}>Reminder Set: {item?.reminder ? 'Yes' : 'No'}</Text>
-                <Text style={{ ...Fonts.grayColor14SemiBold }}>Status: {item?.status ? 'Completed' : 'Not Completed'}</Text>
+                <Text style={styles.labelStyle}>{item?.name}</Text>
+                <Text style={styles.labelStyle}>{item?.description}</Text>
+                <Text style={styles.labelStyle}>Due: {item?.dueDate}</Text>
+                <Text style={styles.grayLabelStyle}>Reminder Set: {item?.reminder ? 'Yes' : 'No'}</Text>
+                <Text style={styles.grayLabelStyle}>Status: {item?.status ? 'Completed' : 'Not Completed'}</Text>
             </View>
         )
     }
@@ -141,6 +163,17 @@ const Task = () => {
                 <CreateTask />
 
             </RBSheet>
+            <RBSheet
+                ref={userBottomSheet}
+                height={600}
+                openDuration={250}
+                customStyles={{
+
+                }}
+            >
+                <Users onClickUser={onShareUser}/>
+
+            </RBSheet>
         </SafeAreaView>
     )
 }
@@ -167,6 +200,26 @@ const styles = StyleSheet.create({
     filterLabel: {
         ...Fonts.blackColor12SemiBold,
         color: 'white'
+    },
+    labelStyle: {
+        ...Fonts.blackColor14SemiBold, 
+        marginBottom: 6
+    },
+    grayLabelStyle: {
+        ...Fonts.grayColor14SemiBold, 
+        marginBottom: 6 
+    },
+    cardStyle: {
+        backgroundColor: '#F5F5F5',
+        margin: 20, 
+        padding: 20, 
+        borderRadius: 20
+    },
+    iconContainer: {
+        display: 'flex', 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        marginBottom: 10
     }
 })
 export default Task

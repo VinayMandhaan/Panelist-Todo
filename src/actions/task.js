@@ -3,6 +3,7 @@ import { CREATE_TASK_REQUEST, CREATE_TASK_SUCCESS, CREATE_TASK_FAILURE, GET_TASK
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { showToast } from "../utils/customToast";
 import * as Notifications from 'expo-notifications';
+import { getProject } from "./project";
 
 
 export const createTask = (data) => async dispatch => {
@@ -88,6 +89,7 @@ export const updateTask = (taskId) => async dispatch => {
         }).then((res) => {
             console.log(res.data,'YPDATE')
             dispatch(getTasks())
+            dispatch(getProject())
             dispatch({
                 type: UPDATE_TASK_SUCCESS,
                 payload: res.data

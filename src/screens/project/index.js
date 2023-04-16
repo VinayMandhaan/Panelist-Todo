@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList, ActivityIndicator, Platform } from 'react-native';
 import { Colors, Sizes, Fonts } from '../../constants/styles';
 import Header from '../../components/header';
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -88,7 +88,8 @@ const Project = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.whiteColor
+        backgroundColor: Colors.whiteColor,
+        marginTop: Platform.OS == 'android' ? 20 : 0
     }
 })
 

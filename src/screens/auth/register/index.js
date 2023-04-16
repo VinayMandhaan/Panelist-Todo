@@ -15,17 +15,14 @@ const SignupScreen = ({ navigation }) => {
     const dispatch = useDispatch()
     const authLoading = useSelector(state => state.auth.loading)
     const [fullName, setFullName] = useState('')
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
     const onSubmitRegister = () => {
-        if(!email?.length > 0 || !password?.length > 6 || !fullName?.length > 0) {
+        if(!email?.length > 0 || password?.length < 7 || !fullName?.length > 0) {
             showToast('error','Todo','Email, Full Name Should Not Be Empty and Password Should be More than 6 Characters')
         } else {
             dispatch(register(email, password, fullName))

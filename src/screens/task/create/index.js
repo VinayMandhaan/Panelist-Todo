@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { createTask } from '../../../actions/task';
 import Button from '../../../components/button';
 import { showToast } from '../../../utils/customToast';
+import { formatDate } from '../../../utils/dateFunctions';
 
 
 
@@ -17,8 +18,10 @@ const CreateTask = () => {
     const [description, setDescription] = useState('')
     const [dueDate, setDueDate] = useState(new Date())
     const [reminder, setReminder] = useState(false)
+    const [showDateTimePicker, setShowDateTimePicker] = useState(false)
 
     const onChangeDate = (val,date) => {
+        setShowDateTimePicker(false)
         setDueDate(date)
     }
 
@@ -49,7 +52,7 @@ const CreateTask = () => {
                         style={{ ...Fonts.blackColor18Regular, borderBottomColor: Colors.grayColor, borderBottomWidth: 1 }}
                         placeholder="Buy Grocery..."
                         placeholderTextColor={Colors.grayColor}
-                        cursorColor={Colors.whiteColor}
+                        cursorColor={Colors.blackColor}
                     />
                 </View>
             </View>
@@ -64,22 +67,30 @@ const CreateTask = () => {
                         style={{ ...Fonts.blackColor18Regular, borderBottomColor: Colors.grayColor, borderBottomWidth: 1 }}
                         placeholder="From Wallmart.."
                         placeholderTextColor={Colors.grayColor}
-                        cursorColor={Colors.whiteColor}
+                        cursorColor={Colors.blackColor}
                     />
                 </View>
             </View>
             <View>
                 <View style={styles.inputContainer}>
+                    <TouchableOpacity onPress={() => {
+                        setShowDateTimePicker(true)
+                    }}>
                     <Text style={{ ...Fonts.blackColor16Regular, marginBottom: 10 }}>
-                        Task Due Date
+                        Select Due Date
                     </Text>
-                    <DateTimePicker
-                        value={dueDate}
-                        onChange={(val,date) => {
-                            onChangeDate(val,date)
-                        }}
-
-                    />
+                    <Text>{formatDate(dueDate)}</Text>
+                    </TouchableOpacity>
+                    {
+                        showDateTimePicker && (
+                            <DateTimePicker
+                            value={dueDate}
+                            onChange={(val,date) => {
+                                onChangeDate(val,date)
+                            }}
+                        />
+                        )
+                    }
                 </View>
             </View>
             <View>

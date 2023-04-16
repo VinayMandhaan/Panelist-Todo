@@ -67,7 +67,7 @@ const CreateProject = () => {
                         style={{ ...Fonts.blackColor18Regular, borderBottomColor: Colors.grayColor, borderBottomWidth: 1 }}
                         placeholder="Buy Grocery..."
                         placeholderTextColor={Colors.grayColor}
-                        cursorColor={Colors.whiteColor}
+                        cursorColor={Colors.blackColor}
                     />
                 </View>
             </View>
@@ -82,7 +82,7 @@ const CreateProject = () => {
                         style={{ ...Fonts.blackColor18Regular, borderBottomColor: Colors.grayColor, borderBottomWidth: 1 }}
                         placeholder="From Wallmart.."
                         placeholderTextColor={Colors.grayColor}
-                        cursorColor={Colors.whiteColor}
+                        cursorColor={Colors.blackColor}
                     />
                 </View>
             </View>
@@ -93,9 +93,9 @@ const CreateProject = () => {
                     </Text>
                     <DropDownPicker
                         maxHeight={400}
-                        containerStyle={{height:'auto'}}
                         open={open}
                         value={value}
+                        dropDownDirection='TOP'
                         items={items}
                         setOpen={setOpen}
                         setValue={setValue}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, Platform, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Colors, Fonts } from '../../constants/styles';
 import Header from '../../components/header';
 import { useDispatch, useSelector } from 'react-redux';
@@ -78,7 +78,8 @@ const Shared = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.whiteColor
+        backgroundColor: Colors.whiteColor,
+        marginTop: Platform.OS == 'android' ? 20 : 0
     },
     avatarContainer: {
         alignItems: 'center',

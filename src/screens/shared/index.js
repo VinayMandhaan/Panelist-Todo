@@ -40,11 +40,15 @@ const Shared = () => {
                     </View>
                     <Text style={{ ...Fonts.blackColor14SemiBold, marginLeft: 10 }}>{toggleShared == 'My' ? item?.user?.fullName : item?.sender?.fullName}</Text>
                 </View>
-                <View>
-                    <Text style={{ ...Fonts.blackColor14SemiBold }}>Task Name: {item?.taskId?.name}</Text>
-                    <Text style={{ ...Fonts.blackColor14SemiBold }}>Task Due Date: {formatDate(item?.taskId?.dueDate)}</Text>
-                    <Text style={{ ...Fonts.blackColor14SemiBold }}>Status: {item?.taskId?.status ? 'Completed' : 'Not Completed'}</Text>
-                </View>
+                {
+                    item?.taskId && (
+                        <View>
+                            <Text style={{ ...Fonts.blackColor14SemiBold }}>Task Name: {item?.taskId?.name}</Text>
+                            <Text style={{ ...Fonts.blackColor14SemiBold }}>Task Due Date: {formatDate(item?.taskId?.dueDate)}</Text>
+                            <Text style={{ ...Fonts.blackColor14SemiBold }}>Status: {item?.taskId?.status ? 'Completed' : 'Not Completed'}</Text>
+                        </View>
+                    )
+                }
             </TouchableOpacity>
         )
     }

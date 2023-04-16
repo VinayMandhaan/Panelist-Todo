@@ -87,7 +87,7 @@ const SignupScreen = ({ navigation }) => {
                     Already have an account? { }
                 </Text>
                 <Text
-                    onPress={() => { navigation.push('Signin') }}
+                    onPress={() => { navigation.push('SigninScreen') }}
                     style={{ ...Fonts.primaryColor16Bold }}
                 >
                     Sign In

@@ -22,8 +22,12 @@ const SignupScreen = ({ navigation }) => {
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
     const onSubmitRegister = () => {
-        if(!email?.length > 0 || password?.length < 7 || !fullName?.length > 0) {
-            showToast('error','Todo','Email, Full Name Should Not Be Empty and Password Should be More than 6 Characters')
+        if(!email.length > 0) {
+            showToast('error','Todo','Email Should Not Be Empty')
+        } else if(password.length < 7) {
+            showToast('error','Todo','Password Should be More than 6 Characters')
+        } else if(!fullName.length > 0) {
+            showToast('error','Todo','Full Name Should Not Be Empty')
         } else {
             dispatch(register(email, password, fullName))
         }

@@ -4,7 +4,8 @@ import { Colors, Fonts, Sizes } from '../../../constants/styles'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../../actions/auth';
-import { ActivityIndicator } from 'react-native-paper';
+import { ActivityIndicator, shadow } from 'react-native-paper';
+import { showToast } from '../../../utils/customToast';
 
 
 
@@ -24,7 +25,11 @@ const SignupScreen = ({ navigation }) => {
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
     const onSubmitRegister = () => {
-        dispatch(register(email, password, fullName))
+        if(!email?.length > 0 || !password?.length > 6 || !fullName?.length > 0) {
+            showToast('error','Todo','Email, Full Name Should Not Be Empty and Password Should be More than 6 Characters')
+        } else {
+            dispatch(register(email, password, fullName))
+        }
     }
 
 
@@ -40,7 +45,7 @@ const SignupScreen = ({ navigation }) => {
                         {emailInfo()}
                         {/* {phoneNumberInfo()} */}
                         {passwordInfo()}
-                        {confirmPasswordInfo()}
+                        {/* {confirmPasswordInfo()} */}
                         {signupButton()}
                         {orText()}
                         {/* {socialMediaOIptions()} */}
